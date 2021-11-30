@@ -1,6 +1,0 @@
-- All the source codes of the forward solver are in the folder "src".
-- To compile the source codes, use the command "make design" in the main directory. In this example, the main directory is "ToARL".
-- The results are in the folder "Result", with the subfolder's names "Joint", "Sequential", "Soft" and "Strong" for different design strategies.
-- In each subfolder of "Result", the file "driver" is the interface between the forward solver and DAKOTA.
-- To run the code, go to each subfolder of "Result", e.g., "Joint", and then submit the job using the command with "job.sh".
-- Using Genetic Algorithm, the optimization results are in the files "population".
