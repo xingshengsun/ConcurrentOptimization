@@ -1,0 +1,78 @@
+# DAKOTA INPUT FILE 
+# Genetic Algorithm (GA) method
+
+# This sample dakota input file is only missing a "variables" keyword, 
+# which is added for each subdiameter containing the a copy of the variables
+# specification for the current variable's subdiameter computation as the last
+# variable in the list.  Here one can specify the evolving and stopping
+# criteria for the optimization.  The concentration executable replaces the
+# evaluation_concurrency=1	\
+# one also defines the driver file that will be used and the names of the
+# files for values of random variables coming from the optimizer (params.in 
+# here) and the file that Dakota expects objective function values to be returned
+# in (results.out here).  These last two files are appended with the current 
+# function evaluation number by Dakota, which can be used in the driver file
+# to distinguish between objective function computations.
+#
+# XS: num of evaluations per generation = num_offspring + mutation_rate*population_size
+
+method,							\
+	soga						\
+	  max_iterations = 1000			\
+	  max_function_evaluations = 100000		\
+	  convergence_tolerance = 1e-3			\
+	  output quiet					\
+	  scaling					\
+	  population_size = 64				\
+	  log_file = 'dakota.log' print_each_pop	\
+	  initialization_type flat_file = './seed.dat'		\
+	  crossover_type shuffle_random			\
+		num_parents = 64			\
+		num_offspring = 48			\
+		crossover_rate = 0.8			\
+	  mutation_type replace_uniform			\
+		mutation_rate = 0.25			\
+	  fitness_type merit_function			\
+		constraint_penalty = 0.999		\
+	  replacement_type elitist		\
+	  convergence_type best_fitness_tracker		\
+		percent_change = 1.0			\
+		num_generations = 1000			\
+
+model,		\
+	single	\
+
+interface						\
+	fork                          \
+	  analysis_driver = './driver'			\
+	  parameters_file = 'design.in'		\
+	  results_file = 'design.out'			\
+	  file_tag
+		file_save
+
+responses				\
+	objective_functions = 1	\
+  descriptors 'F'  \
+	no_gradients			\
+	no_hessians			\
+
+variables,			\
+	continuous_design = 5	\
+	  cdv_lower_bounds = 	\
+			0.95	 \
+      0.0  \
+      0.95  \
+      0.0  \
+      0.0  \
+	  cdv_upper_bounds = 	\
+			1.0	\
+      6.2832 \
+      1.0 \
+      6.2832 \
+      1.0 \
+	  cdv_descriptors = 	\
+			'X1'	\
+			'X2'	\
+			'X3'	\
+			'X4'	\
+			'X5'	\
